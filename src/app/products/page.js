@@ -1,56 +1,54 @@
+import React from 'react'
+import Image from 'next/image'
+import ProductList from './ProductList'
 
-import Image from 'next/image';
-
-async function getProduct(id) {
-  const res = await fetch(`http://localhost:1337/api/products/${id}?populate=*`);
+async function getProducts() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?populate=*`, { next: { revalidate: 3600 } })
   if (!res.ok) {
-    throw new Error('Failed to fetch product');
+    throw new Error('Failed to fetch products')
   }
-  return res.json();
+  return res.json()
 }
 
-export default async function ProductDetail({ params }) {
-  const { id } = params;
-  const productData = await getProduct(id);
-  const product = productData.data;
-
-  if (!product) {
-    return <div className="container mx-auto px-4 py-12 text-center">Product not found</div>;
+async function getCategories() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories?populate=*`, { next: { revalidate: 3600 } })
+  if (!res.ok) {
+    throw new Error('Failed to fetch categories')
   }
+  return res.json()
+}
+
+export default async function ProductsPage() {
+  const [productsData, categoriesData] = await Promise.all([
+    getProducts(),
+    getCategories()
+  ])
+
+  const products = productsData.data
+  const categories = categoriesData.data
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="md:flex">
-          <div className="md:w-1/2">
-            {product.attributes.Image.data && (
-              <div className="relative h-96 w-full">
-                <Image
-                  src={`http://localhost:1337${product.attributes.Image.data.attributes.url}`}
-                  alt={product.attributes.Name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
-          </div>
-          <div className="p-8 md:w-1/2">
-            <h1 className="text-3xl font-bold mb-4">{product.attributes.Name}</h1>
-            <p className="text-2xl font-semibold text-blue-600 mb-6">
-              ${product.attributes.Price}
-            </p>
-            
-            <div className="prose max-w-none mb-6">
-              {product.attributes.Description}
-            </div>
-            
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors w-full">
-              Add to Cart
-            </button>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-300 via-white to-purple-300 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="relative">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in">
+            Our Products
+          </h1>
+          
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
+            Discover our curated collection of premium products, crafted with attention to detail and quality.
+          </p>
+          
+          <ProductList initialProducts={products} categories={categories} />
         </div>
       </div>
     </div>
-  );
+  )
 }
