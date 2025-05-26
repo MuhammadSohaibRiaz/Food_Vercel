@@ -121,19 +121,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Testimonial 1 */}
             <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <Image src="https://randomuser.me/api/portraits/women/68.jpg" alt="Customer 1" width={80} height={80} className="rounded-full mx-auto mb-4" />
+              
               <p className="text-gray-700 italic mb-4">"Absolutely love the quality and design. Fast delivery and great customer service!"</p>
               <span className="font-semibold text-blue-600">— Sarah M.</span>
             </div>
             {/* Testimonial 2 */}
             <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <Image src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer 2" width={80} height={80} className="rounded-full mx-auto mb-4" />
+             
               <p className="text-gray-700 italic mb-4">“The shopping experience was seamless and the products exceeded my expectations.”</p>
               <span className="font-semibold text-blue-600">— James L.</span>
             </div>
             {/* Testimonial 3 */}
             <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <Image src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer 3" width={80} height={80} className="rounded-full mx-auto mb-4" />
+             
               <p className="text-gray-700 italic mb-4">“I keep coming back for more. The variety and quality are unmatched!”</p>
               <span className="font-semibold text-blue-600">— Priya S.</span>
             </div>
