@@ -1,7 +1,7 @@
 import ProductList from "./ProductList"
 
 async function getProducts() {
-  const res = await fetch(`https://calm-cat-8e2587a7c3.strapiapp.com/api/products?populate=*`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_KEY}/api/products?populate=*`, {
     next: { revalidate: 3600 },
   })
   if (!res.ok) {
@@ -11,7 +11,7 @@ async function getProducts() {
 }
 
 async function getCategories() {
-  const res = await fetch(`https://calm-cat-8e2587a7c3.strapiapp.com/api/categories?populate=*`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_KEY}/api/categories?populate=*`, {
     next: { revalidate: 3600 },
   })
   if (!res.ok) {

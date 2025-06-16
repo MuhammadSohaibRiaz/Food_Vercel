@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 async function getProduct(slug) {
-  const res = await fetch(`https://calm-cat-8e2587a7c3.strapiapp.com/api/products/${slug}?populate=*`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_KEY}/api/products/${slug}?populate=*`, {
     next: { revalidate: 3600 },
   })
   if (!res.ok) {
@@ -12,7 +12,7 @@ async function getProduct(slug) {
 }
 
 async function getRelatedProducts() {
-  const res = await fetch(`https://calm-cat-8e2587a7c3.strapiapp.com/api/products?populate=*&pagination[limit]=3`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_KEY}/api/products?populate=*&pagination[limit]=3`, {
     next: { revalidate: 3600 },
   })
   if (!res.ok) {
@@ -118,7 +118,7 @@ export default async function ProductDetailPage({ params }) {
                 )}
 
                 {/* Floating Badge */}
-                <div className="absolute top-6 right-6 bg-gradient-to-r from-purple-600 to-emerald-600 text-white px-4 py-2 rounded-2xl font-bold text-lg shadow-lg backdrop-blur-sm border border-white/20">
+                <div className="absolute top-6 right-6 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-2xl font-bold text-lg shadow-lg backdrop-blur-sm border border-white/20">
                   Premium
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default async function ProductDetailPage({ params }) {
                 {/* Price */}
                 <div className="mb-8">
                   <div className="flex items-baseline gap-4">
-                    <span className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-emerald-600">
+                    <span className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
                       ${product.Price}
                     </span>
                     <span className="text-2xl text-slate-400 line-through">${(product.Price * 1.2).toFixed(2)}</span>
@@ -208,7 +208,7 @@ export default async function ProductDetailPage({ params }) {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-emerald-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-purple-700 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                  <button className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                     Add to Cart
                   </button>
                   <button className="flex-1 bg-white/80 backdrop-blur-sm text-slate-700 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white transition-all duration-300 border border-slate-200 hover:border-purple-200 hover:text-purple-700">
